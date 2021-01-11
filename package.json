@@ -1,0 +1,22 @@
+{
+    "name": "web-dev-backend",
+    "version": "1.0.0",
+    "description": "crud app",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Palveet/web-dev-backend.git"
+    },
+    "author": "palveet",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Palveet/web-dev-backend/issues"
+    },
+    "homepage": "https://github.com/Palveet/web-dev-backend#readme",
+    "dependencies": {
+        "express": "^4.17.1"
+    }
+}
