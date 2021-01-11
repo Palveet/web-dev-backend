@@ -1,6 +1,8 @@
-doctype html
-html
-    head
-        title express
-    body
-        h1 Welcome to express and pug tutorial
+extends layout
+block content
+    h1 Welcome to express and pug tutorial
+    h2 #{title}
+    h3 #{quote}
+    ul
+        each article, i in articles
+            li=article.title
