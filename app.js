@@ -1,7 +1,27 @@
 const express = require('express');
 const path = require('path');
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost/express');
+
+let db = mongoose.connection;
+
+//check conn
+db.once('open', () => {
+    console.log('connected');
+});
+//check for db errors
+db.on('error', (err) => {
+    console.log(err);
+});
 //initialising app
 const app = express();
+
+
+//bring model
+
+let Article = require('./models/article');
+
 
 //load view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -10,7 +30,19 @@ app.set('view engine', 'pug');
 
 //home route
 app.get('/', (req, res) => {
-    let articles = [{
+
+    Article.find({}, (err, articles) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('index', {
+                title: 'Articles',
+                articles: articles
+            });
+        }
+
+    });
+    /* let articles = [{
             id: 1,
             title: 'article 1',
             author: 'palveet',
@@ -29,12 +61,7 @@ app.get('/', (req, res) => {
             body: 'this is article 3'
         }
     ]
-
-    res.render('index', {
-        title: 'day 1',
-        quote: "here we go!",
-        articles: articles
-    });
+*/
 });
 
 //add route
