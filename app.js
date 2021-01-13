@@ -30,12 +30,14 @@ app.set('view engine', 'pug');
 
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 
+//set public folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 //home route
 app.get('/', (req, res) => {
@@ -72,6 +74,19 @@ app.get('/', (req, res) => {
     ]
 */
 });
+
+
+//get single article
+
+app.get('/article/:id', (req, res) => {
+    Article.findById(req.params.id, (err, article) => {
+        res.render('article', {
+            article: article
+        });
+
+    });
+});
+
 
 //add route
 app.get('/articles/add', (req, res) => {
