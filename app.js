@@ -87,6 +87,18 @@ app.get('/article/:id', (req, res) => {
     });
 });
 
+//edit
+
+app.get('/article/edit/:id', (req, res) => {
+    Article.findById(req.params.id, (err, article) => {
+        res.render('edit_article', {
+            title: "edit article",
+            article: article
+        });
+
+    });
+});
+
 
 //add route
 app.get('/articles/add', (req, res) => {
@@ -112,6 +124,38 @@ app.post('/articles/add', function(req, res) {
         }
     });
 
+});
+
+
+//update submit
+app.post('/articles/edit/:id', function(req, res) {
+    let article = {};
+    article.title = req.body.title;
+    article.author = req.body.author;
+    article.body = req.body.body;
+
+    let query = { _id: req.params.id }
+
+    Article.updateOne(query, article, function(err) {
+        if (err) {
+            console.log(err);
+            return;
+        } else {
+            res.redirect('/');
+        }
+    });
+
+});
+
+app.delete('/article/:id', function(req, res) {
+
+    let query = { _id: req.params.id }
+    Article.remove(query, function(err) {
+        if (err) {
+            console.log(err);
+        }
+        res.send('success');
+    });
 });
 
 
