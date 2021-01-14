@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const expressValidator = require('express-validator');
+const flash = require('connect-flash');
+const session = require('express-session');
+
 
 mongoose.connect('mongodb://localhost/express');
 
@@ -39,6 +43,41 @@ app.use(bodyParser.json());
 //set public folder
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+//session middleware
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}))
+
+//message middleware
+app.use(require('connect-flash')());
+app.use(function(req, res, next) {
+    res.locals.messages = require('express-messages')(req, res);
+    next();
+});
+
+//validator
+app.use(expressValidator({
+    errorFormatter: function(param, msg, value) {
+        var namespace = param.split('.'),
+            root = namespace.shift(),
+            formParam = root;
+
+        while (namespace.length) {
+            formParam += '[' + namespace.shift() + ']';
+        }
+        return {
+            param: formParam,
+            msg: msg,
+            value: value
+        };
+    }
+}));
+
+
 //home route
 app.get('/', (req, res) => {
 
@@ -53,26 +92,7 @@ app.get('/', (req, res) => {
         }
 
     });
-    /* let articles = [{
-            id: 1,
-            title: 'article 1',
-            author: 'palveet',
-            body: 'this is article 1'
-        },
-        {
-            id: 1,
-            title: 'article 2',
-            author: 'palveet',
-            body: 'this is article 2'
-        },
-        {
-            id: 1,
-            title: 'article 3',
-            author: 'palveet',
-            body: 'this is article 3'
-        }
-    ]
-*/
+
 });
 
 
