@@ -41,16 +41,15 @@ app.use(bodyParser.json());
 
 
 //set public folder
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public ')));
 
 
 //session middleware
 app.use(session({
     secret: 'keyboard cat',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: true }
-}))
+    resave: true,
+    saveUninitialized: true
+}));
 
 //message middleware
 app.use(require('connect-flash')());
@@ -140,6 +139,7 @@ app.post('/articles/add', function(req, res) {
             console.log(err);
             return;
         } else {
+            req.flash('success', 'article added');
             res.redirect('/');
         }
     });
@@ -161,6 +161,7 @@ app.post('/articles/edit/:id', function(req, res) {
             console.log(err);
             return;
         } else {
+            req.flash("danger", 'Article Updated');
             res.redirect('/');
         }
     });
