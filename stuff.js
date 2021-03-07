@@ -8,7 +8,9 @@ var adder = function(a, b) {
 
 var pi = 3.142;
 var name = `PALVEET KAUR SALUJA`
-module.exports.counter = counter;
-module.exports.adder = adder;
-module.exports.pi = pi;
-module.exports.name = name;
+module.exports = {
+    counter: counter,
+    adder: adder,
+    pi: pi,
+    name: name
+};
