@@ -1,9 +1,0 @@
-extends layout
-block content
-    h1 Welcome to express and pug tutorial
-    h2 #{title}
-    h3 #{quote}
-    ul.list-group
-        each article, i in articles
-            li.list-group-tem
-                a(href="/article/"+article._id)= article.title
