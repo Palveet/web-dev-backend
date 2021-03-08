@@ -1,8 +1,6 @@
 var fs = require('fs');
 
-//async
-fs.readFile('read.txt', 'utf8', function(err, data) {
-    console.log(data);
+fs.rmdir('stuff', (err) => {
+    if (err) console.log(err);
+    else console.log('deleted');
 });
-
-fs.writeFileSync('write.txt', 'hello');
